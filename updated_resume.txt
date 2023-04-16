@@ -1,0 +1,61 @@
+Overall, your resume looks great! Here are some minor edits to make it even stronger:
+
+- In the "Relevant Courses" section, it might be helpful to add a comma after "Design Thinking and Communication." 
+
+- In the "EXPERIENCE" section, consider starting each bullet point with a action verb in past tense such as "Designed," "Integrated," "Managed," "Engineered," "Utilized," "Developed."
+
+- In the "TECHNICAL PROJECTS" section, you can remove the dates (2021-Present/2020-2021) since the project titles and descriptions speak more to your qualifications.
+
+- In the "SKILLS/INTERESTS" section, consider breaking up the skills and interests into two separate sections. In the skills section, group together technical skills and the documentation and database management skills. In the interests section, highlight 2-3 interests that are more directly relevant to the position you're applying for.
+
+Here's a revised version of your resume with these edits incorporated:
+
+
+Albert Lu
+(847) 393-6299 | albertlu2024@u.northwestern.edu | albertlu.us | github.com/azlu20
+
+EDUCATION
+
+Northwestern University (Cumulative GPA: 3.97), 2021-2024
+Bachelor of Science in Computer Science, Minor in Data Science
+Relevant Courses: Deep Learning, Operating Systems, Game Design and Development, Statistics, Machine Learning, Engineering Analysis, Computer Systems, Design Thinking and Communication.
+
+Washington University in St. Louis, 2020-2021
+Relevant Courses: Object Oriented Programming Software Laboratory, Data Structures and Algorithms, Multivariable Calculus.
+
+EXPERIENCE
+
+Software Engineer Intern, Microsoft, June 2022 - September 2022
+- Designed and developed a Standalone Single Stroke Shape Recognizer capable of recognizing over fourteen shapes with high accuracy and producing beautified hot points for rendering
+- Integrated Shape Recognizer across multiple platforms including Win32 applications, browsers, and into Microsoft general’s microservice provider for consumption in any Microsoft product.
+
+Founder/Product Manager, Lunar Game Studios, 2021 - Present
+- Managed discussion and development of an upcoming game by creating timelines, goals, and curated frameworks for the team of six developers
+- Engineered core mechanics, level designs, and MDA aspects of the game using C# scripts within the Unity Development Platform.
+
+Software Developer Intern, United States Liability Insurance Group, May 2021 - August 2021
+- Utilized C# to create a dynamic and user-friendly front-end GUI (WinForm) that accessed and updated a SQL database of Employees that allows for data manipulation and analysis
+- Developed new features and bug fixed the data and UI tier of the live application using Angular and C# within a dedicated team environment.
+
+TECHNICAL PROJECTS
+
+HMU (Python, Angular, Flask)
+- Designed and developed an expansive web app for college-age students looking for gatherings. Gatherings are suggested by an algorithm that calculates mutual friends and other factors so that individuals can request to join while the host can use the platform to manage attendees. Utilizes Python for the middle tier data processing before using Flask to manage requests for the frontend built in Angular.
+
+Various Machine Learning Models (Python)
+- Developed a Recurrent Neural Network without any assisting frameworks such as Pytorch or Tensorflow to recognize handwriting up to 90% accuracy.
+- Implemented general algorithms such as K Nearest Neighbors, Decision Trees, Perceptron, and Polynomial Regression to fit and predict labels of any inputs.
+
+Recently Completed Programming Projects:
+- Min-Max to the Max (Python, Pytorch): Utilized Riot Games' API to create a program that utilizes custom made heuristics to inform the player what best purchases by incorporating multiple factors into decision.
+- Board Games (C++): Developed several board games within a team environment using polymorphism and inheritance to simplify the process. Utilized Git and version controls to enable working in a group environment.
+- Excel Scraper(Python): Produced commercially, this program is coded for flexibility to encourage reusability and to ensure it works on multiple templates.
+- Self Solving Puzzle Program(Java): Using Gradient Descent and Decision Trees, this program solves random puzzles by moving pieces to limit the prediction error.
+
+SKILLS
+
+Technical Skills: Python, C++, Java, C#, SQL, HTML, Javascript, CSS, Angular, Git, Documentation, Database Management, Web Development.
+
+INTERESTS
+
+Interests: Machine Learning, Game Design, Web Development.
