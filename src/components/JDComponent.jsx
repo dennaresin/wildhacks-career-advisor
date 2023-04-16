@@ -41,11 +41,11 @@ const JDComponent = ({ previousStep, nextStep, handleChange, setJobDescriptionSt
         />
       </div>
       <div class="row justify-content-center">
-        <div class="col-4">
+        {/* <div class="col-4">
           <button class="btn btn-primary" onClick={GoBack}>
             <b>Back</b>
           </button>
-        </div>
+        </div> */}
         <div class="col-4">
           <button class="btn btn-primary" onClick={Continue} disabled={values.jobDescriptionString === ''}>
             <b>Continue</b>

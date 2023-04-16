@@ -5,7 +5,7 @@ import { runResponse, findResumeDiff } from "../../utilities/openai"
 import { convertPdfToString } from "../../utilities/utils"
 import "./ResumeComponent.css";
 
-const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString, values }) => {
+const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString, setPrompt, values }) => {
   // drag state
   const [dragActive, setDragActive] = React.useState(false);
   const [fileExists, setFileExists] = React.useState(false);
@@ -45,12 +45,27 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
           values["resumeString"] = text;
           console.log(values);
           console.log(text);
+          document.getElementById("instructions").innerHTML = "Processing Resume, Please Wait";
           setResume(text);
+          setResumeString(text);
+
+          runResponse(text).then((res) => {
+            console.log(res);
+            console.log(typeof res[0]);
+            let resume_string = res[0];
+            findResumeDiff(resume_string, resume);
+            setPrompt(res[1]);
+            document.getElementById("instructions").innerHTML = "Resume Processed!";
+      
+            // Write edited resume to 'updated_resume.txt' .
+            // fs.writeFile("updated_resume.txt", resume_string, (err) => {
+            //   // In case of a error throw err.
+            //   if (err) throw err;
+            // });
+          });
         });
       }
       // setFileExists(true);
-      let uploadAlert = fileName + " successfully loaded!"
-      alert(uploadAlert);
       setFileExists(true); ////////////////////////// Use to change button to an active color
     }
   };
@@ -71,11 +86,25 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
           values["resumeString"] = text;
           console.log(values);
           console.log(text);
+          document.getElementById("instructions").innerHTML = "Processing Resume, Please Wait";
           setResume(text);
-        });
+          setResumeString(text);
 
-        let uploadAlert = fileName + " successfully loaded!"
-        alert(uploadAlert);
+          runResponse(text).then((res) => {
+            console.log(res);
+            console.log(typeof res[0]);
+            let resume_string = res[0];
+            findResumeDiff(resume_string, resume);
+            setPrompt(res[1]);
+            document.getElementById("instructions").innerHTML = "Resume Processed!";
+      
+            // Write edited resume to 'updated_resume.txt' .
+            // fs.writeFile("updated_resume.txt", resume_string, (err) => {
+            //   // In case of a error throw err.
+            //   if (err) throw err;
+            // });
+          });
+        });
         setFileExists(true); ////////////////////////// Use to change button to an active color
       }
       // console.log(pdfText);
@@ -107,26 +136,14 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
     //   }
     // );
 
-    runResponse(resume).then((res) => {
-      let resume_string = res["message"]["content"];
-      console.log(resume_string);
-      findResumeDiff(resume_string, resume);
-
-      // Write edited resume to 'updated_resume.txt' .
-      // fs.writeFile("updated_resume.txt", resume_string, (err) => {
-      //   // In case of a error throw err.
-      //   if (err) throw err;
-      // });
-    });
-
-    setResumeString(resume);
+    // setResumeString(resume);
     nextStep();
   };
 
   return (
-    <div>
+    <div class="wrapper">
       <div class="container">
-        <h2>Please Upload Your PDF Resume</h2>
+        <h2 class="title" id="instructions">Please Upload Your Resume as a PDF</h2>
       </div>
       <div class="container">
         <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
@@ -140,8 +157,9 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
           {dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
         </form>
       </div>
-
-      <button type="submit" id="submit-resume-button" onClick={Continue} class="btn btn-primary" disabled={values.resumeString===''}>Continue</button>
+      <div class="container">
+        <button type="submit" id="submit-resume-button" onClick={Continue} class="btn btn-primary" disabled={values.resumeString==='' || values.prompt===''}>Continue</button>
+      </div>
     </div>
   );
 };

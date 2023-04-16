@@ -1,0 +1,9 @@
+.userMessage {
+  margin: 10px 20px 10px auto;
+  border-bottom: 1px solid black;
+}
+
+.aiMessage {
+  margin: 10px auto 10px 20px;
+  border-bottom: 1px solid black; 
+}

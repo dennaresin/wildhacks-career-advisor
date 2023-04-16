@@ -1,11 +1,12 @@
 // const { Configuration, OpenAIApi } = require("openai");
 // const fs = require("fs");
 import { Configuration, OpenAIApi } from "openai";
+import { apiKey } from "./secrets";
 
 // require("dotenv").config();
 
 const configuration = new Configuration({
-  apiKey: "PLACE API KEY HERE", /////////////////////// DONT FORGET TO REMOVE WHEN PUSHING
+  apiKey: apiKey, /////////////////////// DONT FORGET TO REMOVE WHEN PUSHING
 });
 const openai = new OpenAIApi(configuration);
 
@@ -32,6 +33,47 @@ const openai = new OpenAIApi(configuration);
 //   },
 //   { role: "user", content: test_resume },
 // ];
+export async function compareResumeToJD(jd, prompt) {
+  var newprompt =
+    [{
+      role: "user",
+      content: `Here is a job description for a job I want. How does my resume compare to the job description? Are there missing qualifications, and if so what resources should I consult for them? ${jd}`,
+    }]
+  //   ;
+  // var jd_prompt = [{ role: "user", content: jd }]
+  // newprompt = newprompt.concat(jd);
+
+  prompt.concat(newprompt);
+
+  console.log(prompt);
+
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: prompt,
+  });
+  //   console.log(response.data.choices[0].message);
+  var response_string = response.data.choices[0].message.content;
+
+  prompt.push({ role: "assistant", content: response_string });
+  // initial_prompt.push({role: "assistant", content: response_string});
+  return [response_string, prompt];
+}
+
+export async function mockInterviewConversation(new_input, old_convo) {
+  if (old_convo == null || old_convo == undefined) {
+    ; //Should input old conversation that had resume review in here.
+  }
+  let new_convo = old_convo.concat(new_input);
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: prompt,
+  });
+  var response_string = response.data.choices[0].message.content;
+  new_convo.push({ role: "assistant", content: response_string }); //adds newly generated response to the conversation
+
+  return [response_string, new_convo]; //returns the response string and the new conversation that will be saved
+
+}
 
 export async function runResponse(resume) {
   var initial_prompt = [
@@ -58,16 +100,19 @@ export async function runResponse(resume) {
     { role: "user", content: resume },
   ];
 
-  prompt = initial_prompt.concat(resume_prompt)
+  let prompt = initial_prompt.concat(resume_prompt)
 
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: prompt,
   });
   //   console.log(response.data.choices[0].message);
-  var response_string = response.data.choices[0];
+  var response_string = response.data.choices[0].message.content;
+
+  prompt.push({ role: "assistant", content: response_string });
   // initial_prompt.push({role: "assistant", content: response_string});
-  return response_string;
+  console.log([response_string, prompt]);
+  return [response_string, prompt];
 }
 
 export function findResumeDiff(resume_string, old_resume_string) {
