@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "@material-tailwind/react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { runResponse, findResumeDiff } from "../../utilities/openai"
 // import { PdfViewer } from "../../utilities/utils_2"
@@ -34,18 +33,21 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      fileName = file.name;
 
       if (!file) {
         alert("Please upload a file!");
-      } 
-      let pdfText = convertPdfToString(file).then((text) => {
-        values["resumeString"] = text;
-        console.log(values);
-        console.log(text);
-        setResume(text);
-      });
+      } else {
 
+        let fileName = file.name;
+        document.getElementById("uploadButton").innerHTML = fileName;
+        let pdfText = convertPdfToString(file).then((text) => {
+
+          values["resumeString"] = text;
+          console.log(values);
+          console.log(text);
+          setResume(text);
+        });
+      }
       // setFileExists(true);
       let uploadAlert = fileName + " successfully loaded!"
       alert(uploadAlert);
@@ -59,11 +61,12 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
     if (e.target.files && e.target.files[0]) {
       console.log(e);
       const file = e.target.files[0];
-      fileName = file.name;
 
       if (!file) {
         alert("Please upload a file!");
       } else {
+        let fileName = file.name;
+        document.getElementById("uploadButton").innerHTML = fileName;
         let pdfText = convertPdfToString(file).then((text) => {
           values["resumeString"] = text;
           console.log(values);
@@ -92,6 +95,7 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
   };
 
   const Continue = (e) => {
+    console.log("clicky");
     e.preventDefault();
 
     // gettext("https://cdn.mozilla.net/pdfjs/tracemonkey.pdf").then(
@@ -121,19 +125,23 @@ const ResumeComponent = ({ previousStep, nextStep, handleChange, setResumeString
 
   return (
     <div>
-      <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
-        <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChangeDrag} />
-        <label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : ""}>
-          <div>
-            <p>Drag and drop your file here or</p>
-            <button className="upload-button" onClick={onButtonClick}>Upload a file</button>
-          </div>
-        </label>
-        {dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
-      </form>
+      <div class="container">
+        <h2>Please Upload Your PDF Resume</h2>
+      </div>
+      <div class="container">
+        <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
+          <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChangeDrag} />
+          <label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : ""}>
+            <div>
+              <p>Drag and drop your file here or</p>
+              <button className="upload-button" onClick={onButtonClick} id="uploadButton">Upload a file</button>
+            </div>
+          </label>
+          {dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
+        </form>
+      </div>
 
-
-      <Button onClick={Continue}>Continue</Button>
+      <button type="submit" id="submit-resume-button" onClick={Continue} class="btn btn-primary" disabled={values.resumeString===''}>Continue</button>
     </div>
   );
 };
