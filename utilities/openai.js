@@ -5,33 +5,33 @@ import { Configuration, OpenAIApi } from "openai";
 // require("dotenv").config();
 
 const configuration = new Configuration({
-  apiKey: "REPLACE THIS",
+  apiKey: "PLACE API KEY HERE", /////////////////////// DONT FORGET TO REMOVE WHEN PUSHING
 });
 const openai = new OpenAIApi(configuration);
 
-var initial_prompt = [
-  {
-    role: "system",
-    content:
-      "You are a career advisor that will help edit resumes for your client, the user.",
-  },
-  {
-    role: "user",
-    content: `Act as a career advisor whose purpose to help maximize my chances of receiving an offer from a company I will tell you.
- You will first check my resume for grammar issues and replace words you see fit that will make the resume stronger. Please provide all the feedback after the revised resume and maintain that the first line of your response of the revised resume matches the first line of the inputted resume.
-Afterwards, I will prompt you with more information about the company, and revise my resume more to make the resume a better fit for the company.
-`,
-  },
-];
+// var initial_prompt = [
+//   {
+//     role: "system",
+//     content:
+//       "You are a career advisor that will help edit resumes for your client, the user.",
+//   },
+//   {
+//     role: "user",
+//     content: `Act as a career advisor whose purpose to help maximize my chances of receiving an offer from a company I will tell you.
+//  You will first check my resume for grammar issues and replace words you see fit that will make the resume stronger. Please provide all the feedback after the revised resume and maintain that the first line of your response of the revised resume matches the first line of the inputted resume.
+// Afterwards, I will prompt you with more information about the company, and revise my resume more to make the resume a better fit for the company.
+// `,
+//   },
+// ];
 
-var resume_prompt = [
-  {
-    role: "user",
-    content:
-      "I will now provide you with the pdf in text format. Check for grammatical errors and if possible reword or rewrite sentences to make it stronger.",
-  },
-  { role: "user", content: test_resume },
-];
+// var resume_prompt = [
+//   {
+//     role: "user",
+//     content:
+//       "I will now provide you with the pdf in text format. Check for grammatical errors and if possible reword or rewrite sentences to make it stronger.",
+//   },
+//   { role: "user", content: test_resume },
+// ];
 
 export async function runResponse(resume) {
   var initial_prompt = [
@@ -90,6 +90,7 @@ export function findResumeDiff(resume_string, old_resume_string) {
     i++;
   }
 }
+
 function strikeThrough(text) {
   return text
     .split("")

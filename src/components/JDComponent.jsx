@@ -1,7 +1,8 @@
 import React from "react";
 import { TextField } from "@mui/material";
 
-const JDComponent = ({ previousStep, nextStep, handleChange, values }) => {
+const JDComponent = ({ previousStep, nextStep, handleChange, setJobDescriptionString, values }) => {
+
   const GoBack = (e) => {
     e.preventDefault();
     previousStep();
@@ -18,9 +19,10 @@ const JDComponent = ({ previousStep, nextStep, handleChange, values }) => {
       <TextField
         type="text"
         placeholder="Enter Job Description Here"
-        variant="filled"
-        value={values.jobDescriptionName}
-        onChange={() => handleChange("jobDescriptionName")}
+        // variant="filled"
+        value={values.jobDescriptionString}
+        // onChange={() => handleChange("jobDescriptionString")}
+        onChange={(e) => setJobDescriptionString(e.target.value)}
         hiddenLabel
         InputProps={{
           style: {
@@ -32,13 +34,13 @@ const JDComponent = ({ previousStep, nextStep, handleChange, values }) => {
             alignText: "center",
             borderRadius: "8px",
             boxShadow: "inset 0 2px 8px #e5e5e5",
-          },
-          disableUnderline: true,
+          }
+          // disableUnderline: true,
         }}
       />
 
       <button onClick={Continue}>
-        <b>Next</b>
+        <b>Continue</b>
       </button>
 
       <button onClick={GoBack}>

@@ -44,6 +44,14 @@ export default class Form extends Component {
       }
       console.log(this.state);
     };
+
+    setResumeString = (text) => {
+      this.setState({ resumeString: text });
+    }
+
+    setJobDescriptionString = (text) => {
+      this.setState({ jobDescriptionString: text });
+    }
   
     render() {
       const { step } = this.state;
@@ -55,6 +63,7 @@ export default class Form extends Component {
         resumeString,
         jobDescriptionString
       };
+      console.log(this.state)
   
       switch (step) {
         case 1:
@@ -63,6 +72,7 @@ export default class Form extends Component {
               previousStep={this.previousStep}
               nextStep={this.nextStep}
               handleChange={this.handleChange}
+              setResumeString={this.setResumeString}
               values={values}
             />
           );
@@ -72,6 +82,7 @@ export default class Form extends Component {
               previousStep={this.previousStep}
               nextStep={this.nextStep}
               handleChange={this.handleChange}
+              setJobDescriptionString={this.setJobDescriptionString}
               values={values}
             />
           );
