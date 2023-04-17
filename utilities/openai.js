@@ -35,15 +35,15 @@ const openai = new OpenAIApi(configuration);
 // ];
 export async function compareResumeToJD(jd, prompt) {
   var newprompt =
-    [{
+    {
       role: "user",
-      content: `Here is a job description for a job I want. How does my resume compare to the job description? Are there missing qualifications, and if so what resources should I consult for them? ${jd}`,
-    }]
+      content: `Here is a job description for a job I want. How does my resume compare to the job description? Are there missing qualifications, and if so what resources should I consult for them? Also tell me if you think the job's field doesn't match my experience. ${jd}`,
+    }
   //   ;
   // var jd_prompt = [{ role: "user", content: jd }]
   // newprompt = newprompt.concat(jd);
 
-  prompt.concat(newprompt);
+  prompt.push(newprompt);
 
   console.log(prompt);
 
@@ -56,6 +56,10 @@ export async function compareResumeToJD(jd, prompt) {
 
   prompt.push({ role: "assistant", content: response_string });
   // initial_prompt.push({role: "assistant", content: response_string});
+  console.log("JD COMPARISON");
+
+  console.log(response_string);
+  console.log(prompt);
   return [response_string, prompt];
 }
 
@@ -73,6 +77,29 @@ export async function mockInterviewConversation(new_input, old_convo) {
 
   return [response_string, new_convo]; //returns the response string and the new conversation that will be saved
 
+}
+
+export async function sendInput(input, prompt) {
+  var newprompt =
+    {
+      role: "user",
+      content: input,
+    }
+  //   ;
+  // var jd_prompt = [{ role: "user", content: jd }]
+  // newprompt = newprompt.concat(jd);
+
+  prompt.push(newprompt);
+
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: prompt,
+  });
+  var response_string = response.data.choices[0].message.content;
+
+  prompt.push({ role: "assistant", content: response_string });
+  // initial_prompt.push({role: "assistant", content: response_string});
+  return [response_string, prompt];
 }
 
 export async function runResponse(resume) {

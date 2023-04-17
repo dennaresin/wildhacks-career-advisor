@@ -1,7 +1,8 @@
 import React from "react";
 import { TextField } from "@mui/material";
+import { compareResumeToJD } from "../../utilities/openai";
 
-const JDComponent = ({ previousStep, nextStep, handleChange, setJobDescriptionString, values }) => {
+const JDComponent = ({ previousStep, nextStep, handleChange, setJobDescriptionString, setRes, setPrompt, values }) => {
 
   const GoBack = (e) => {
     e.preventDefault();
@@ -9,13 +10,18 @@ const JDComponent = ({ previousStep, nextStep, handleChange, setJobDescriptionSt
   };
 
   const Continue = (e) => {
-    console.log(values);
     e.preventDefault();
-    nextStep();
+    document.getElementById("comparingText").innerHTML = "Comparing Resume to Job Description..."
+    compareResumeToJD(values.jobDescriptionString, values.prompt).then((res) => {
+      setPrompt(res[1]);
+      setRes(res[0]);
+      nextStep();
+    })
   };
 
   return (
     <div class="container text-center">
+      <h2 id="comparingText"></h2>
       <div class="row justify-content-center">
         <TextField
           type="text"

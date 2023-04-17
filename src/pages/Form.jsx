@@ -102,35 +102,24 @@ export default class Form extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             setJobDescriptionString={this.setJobDescriptionString}
+            setRes = {this.setRes}
+            setPrompt = {this.setPrompt}
             values={values}
           />
         );
       case 3:
-        if (values.res=='') {
-          compareResumeToJD(values.jobDescriptionString, values.prompt).then((res) => {
-            this.setPrompt(res[1]);
-            this.setRes(res[0]);
-            return (
-              <ComparisonComponent
-                response={res[0]}
-                nextStep={this.nextStep}
-              />
-            );
-          })
-        } else {
           return (
             <ComparisonComponent
-              response={values.res}
+              response={this.state.res}
               nextStep={this.nextStep}
             />
           );
-        }
-      // case 4:
-      //   return (
-      //     <MockInterviewComponent
-      //       previousConvo={values.prompt}
-      //     />
-      //   );
+      case 4:
+        return (
+          <MockInterviewComponent
+            previousConvo={values.prompt}
+          />
+        );
       default:
       // do nothing
     }
